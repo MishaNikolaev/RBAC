@@ -49,7 +49,7 @@ abstract class AbstractRoleAssignment implements RoleAssignment {
         if (metadata.reason() != null && !metadata.reason().isBlank()) {
             sb.append("\nReason: ").append(metadata.reason());
         }
-        sb.append("\nStatus: ").append(isActive() ? "ACTIVE" : "INACTIVE");
+        sb.append("\nStatus: ").append(isActive() ? "active" : "inactive");
         return sb.toString();
     }
 
