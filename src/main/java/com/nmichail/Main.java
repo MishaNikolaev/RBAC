@@ -44,5 +44,9 @@ public class Main {
         AssignmentMetadata meta = AssignmentMetadata.now("admin", "New team member");
         System.out.println("\nAssignmentMetadata:");
         System.out.println(meta.format());
+
+        AssignmentMetadata fixedMeta = new AssignmentMetadata("admin", "2026-02-07T19:00:00Z", "Initial setup");
+        AbstractRoleAssignment assignment = new PermanentAssignment(u1, admin, fixedMeta);
+        System.out.println(assignment.summary());
     }
 }

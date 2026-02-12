@@ -1,14 +1,14 @@
 package com.nmichail;
 
 import java.time.Instant;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.UUID;
 
 abstract class AbstractRoleAssignment implements RoleAssignment {
     private static final DateTimeFormatter SUMMARY_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-            .withZone(ZoneId.systemDefault());
+            .withZone(ZoneOffset.UTC);
 
     final String assignmentId;
     final User user;
