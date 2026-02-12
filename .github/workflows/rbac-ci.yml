@@ -1,0 +1,60 @@
+name: rbac
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - 'feature/**'
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build:
+    name: sborka
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: gradlew more rules
+        run: chmod +x gradlew
+
+      - name: setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: check Java version
+        run: |
+          java -version
+          ./gradlew --version
+
+      - name: build stage
+        id: build
+        run: ./gradlew -q clean compileJava -Dfile.encoding=UTF-8
+        env:
+          GRADLE_OPTS: "-Dfile.encoding=UTF-8"
+
+      - name: stage demo
+        id: demo
+        run: |
+          ./gradlew -q run -Dfile.encoding=UTF-8 2>&1 | tee demo-output.log || echo "demo ends"
+          echo ""
+          echo "output"
+          cat demo-output.log
+        env:
+          GRADLE_OPTS: "-Dfile.encoding=UTF-8"
+          JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
+
+      - name: save demo log
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: demo-output
+          path: demo-output.log
+          retention-days: 7
