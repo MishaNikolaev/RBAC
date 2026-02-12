@@ -1,5 +1,8 @@
 package com.nmichail;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -26,5 +29,16 @@ public class Main {
         catch (IllegalArgumentException e) {
             System.out.println( e.getMessage());
         }
+
+        Permission readUsers = new Permission("READ", "users", "Can view user list");
+        System.out.println("\nPermission format(): " + readUsers.format());
+
+        Set<Permission> perms = Set.of(
+                new Permission("READ", "users", "Can view user list"),
+                new Permission("WRITE", "users", "Can create and edit users"),
+                new Permission("DELETE", "users", "Can delete users")
+        );
+        Role admin = new Role("Administrator", "Full system access", new HashSet(perms));
+        System.out.println("\n" + admin.format());
     }
 }
