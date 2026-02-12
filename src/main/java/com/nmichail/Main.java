@@ -40,5 +40,9 @@ public class Main {
         );
         Role admin = new Role("Administrator", "Full system access", new HashSet(perms));
         System.out.println("\n" + admin.format());
+
+        AssignmentMetadata meta = AssignmentMetadata.now("admin", "New team member");
+        System.out.println("\nAssignmentMetadata:");
+        System.out.println(meta.format());
     }
 }
