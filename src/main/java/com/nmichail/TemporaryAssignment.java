@@ -29,6 +29,14 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
         return "TEMPORARY";
     }
 
+    public String expiresAt() {
+        return expiresAt;
+    }
+
+    public boolean autoRenew() {
+        return autoRenew;
+    }
+
     public boolean isExpired() {
         return isExpired(LocalDate.now().toString());
     }
