@@ -20,6 +20,19 @@ public class Role {
         this.permissions = permissions;
     }
 
+    public String id() {
+        return id;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public String description() {
+        return description;
+    }
+
+
     public void addPermission(Permission permission) {
         permissions.add(permission);
     }
