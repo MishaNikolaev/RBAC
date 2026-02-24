@@ -82,19 +82,19 @@ public class AssignmentManager implements Repository<RoleAssignment> {
 
     public boolean userHasRole(User user, Role role) {
         return assignments.values().stream()
-                .anyMatch(assignment -> assignment.user().equals(user) && assignment.role().equals(role));
+                .anyMatch(a -> a.user().equals(user) && a.role().equals(role) && a.isActive());
     }
 
     public boolean userHasPermission(User user, String permissionName, String resource) {
         return assignments.values().stream()
-                .filter(assignment -> assignment.user().equals(user))
-                .anyMatch(assignment -> assignment.role().hasPermission(permissionName, resource));
+                .filter(a -> a.user().equals(user) && a.isActive())
+                .anyMatch(a -> a.role().hasPermission(permissionName, resource));
     }
 
     public Set<Permission> getUserPermissions(User user) {
         return assignments.values().stream()
-                .filter(assignment -> assignment.user().equals(user))
-                .flatMap(assignment -> assignment.role().getPermissions().stream())
+                .filter(a -> a.user().equals(user) && a.isActive())
+                .flatMap(a -> a.role().getPermissions().stream())
                 .collect(Collectors.toSet());
     }
 
