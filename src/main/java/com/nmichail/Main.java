@@ -1,33 +1,36 @@
 package com.nmichail;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
+        if (args.length > 0 && "wizard".equalsIgnoreCase(args[0])) {
+            runWizard();
+            return;
+        }
 
         User u1 = User.validate("misha_nikolaev", "Misha Nikolaev", "nmichail@example.com");
         System.out.println(u1.format());
 
         try {
             User.validate(null, "Name", "a@b.co");
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println( e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
         try {
             User.validate("username", "Name", null);
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println( e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
         try {
             User.validate("user", "Name", "some_email.com");
-        }
-        catch (IllegalArgumentException e) {
-            System.out.println( e.getMessage());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
 
         Permission readUsers = new Permission("READ", "users", "Can view user list");
@@ -126,5 +129,94 @@ public class Main {
         } catch (java.io.IOException e) {
             System.out.println("Exception saving log: " + e.getMessage());
         }
+    }
+
+    private static void runWizard() {
+        UserManager userManager = new UserManager();
+        RoleManager roleManager = new RoleManager();
+        AssignmentManager assignmentManager = new AssignmentManager();
+        ReportGenerator reportGenerator = new ReportGenerator();
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println();
+            ConsoleUtils.printSection("Interactive RBAC");
+            ConsoleUtils.printBox("Welcome!", "Create users (saved in session), then view/save reports.");
+            System.out.flush();
+            runWizardStep(scanner, userManager, roleManager, assignmentManager, reportGenerator);
+        }
+    }
+
+    private static void runWizardStep(Scanner scanner,
+                                      UserManager userManager,
+                                      RoleManager roleManager,
+                                      AssignmentManager assignmentManager,
+                                      ReportGenerator reportGenerator) {
+
+        String username = ConsoleUtils.promptString(scanner, "Username (Latin, 3-20 chars)", true);
+        String fullName = ConsoleUtils.promptString(scanner, "Full name", true);
+        String email = ConsoleUtils.promptString(scanner, "Email", true);
+
+        User user;
+        try {
+            user = User.validate(username, fullName, email);
+        } catch (IllegalArgumentException e) {
+            String msg = e.getMessage();
+            if (msg != null && msg.contains("latin")) {
+                msg = msg + "\nUse Latin only";
+            }
+            ConsoleUtils.printBox("Validation error", msg);
+            runWizardStep(scanner, userManager, roleManager, assignmentManager, reportGenerator);
+            return;
+        }
+
+        try {
+            userManager.add(user);
+        } catch (IllegalArgumentException e) {
+            ConsoleUtils.printBox("Cannot add user", e.getMessage() + "\nTry another username.");
+            System.out.flush();
+            runWizardStep(scanner, userManager, roleManager, assignmentManager, reportGenerator);
+            return;
+        }
+        ConsoleUtils.printBox("User created and saved", user.format() + "\nTotal users in session: " + userManager.count());
+        System.out.flush();
+
+        String reportType = ConsoleUtils.promptChoice(scanner, "Choose report to generate and save:",
+                List.of("report-users", "report-roles", "report-matrix"));
+        String report;
+        String filename;
+        switch (reportType) {
+            case "report-users" -> {
+                report = reportGenerator.generateUserReport(userManager, assignmentManager);
+                filename = "build/wizard-report-users.txt";
+            }
+            case "report-roles" -> {
+                report = reportGenerator.generateRoleReport(roleManager, assignmentManager);
+                filename = "build/wizard-report-roles.txt";
+            }
+            default -> {
+                report = reportGenerator.generatePermissionMatrix(userManager, assignmentManager);
+                filename = "build/wizard-report-matrix.txt";
+            }
+        }
+        try {
+            reportGenerator.exportToFile(report, filename);
+            ConsoleUtils.printBox("Report saved", "File: " + filename);
+            System.out.println("\n--- Report content ---\n" + report + "\n--- End ---");
+        } catch (java.io.IOException e) {
+            ConsoleUtils.printBox("Save failed", e.getMessage());
+            System.out.println("\n--- Report preview ---\n" + report.substring(0, Math.min(800, report.length())) + (report.length() > 800 ? "\n..." : "") + "\n--- End ---");
+        }
+        System.out.flush();
+
+        int action = ConsoleUtils.promptInt(scanner, "Action (1=exit, 2=create another user, 3=info)", 1, 3);
+        if (action == 1) {
+            ConsoleUtils.printBox("Goodbye", "Users this session: " + userManager.count() + ". Run again: ./gradlew run --args=wizard");
+            System.out.flush();
+            return;
+        }
+        if (action == 3) {
+            ConsoleUtils.printBox("Info", "This wizard uses ConsoleUtils.promptString, promptInt, promptYesNo, promptChoice. Users kept in memory; reports saved to build/.");
+            System.out.flush();
+        }
+        runWizardStep(scanner, userManager, roleManager, assignmentManager, reportGenerator);
     }
 }

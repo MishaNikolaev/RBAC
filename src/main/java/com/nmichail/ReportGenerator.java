@@ -99,6 +99,9 @@ public class ReportGenerator {
 
     public void exportToFile(String report, String filename) throws IOException {
         Path path = Path.of(filename);
+        if (path.getParent() != null) {
+            Files.createDirectories(path.getParent());
+        }
         Files.writeString(path, report, StandardCharsets.UTF_8);
     }
 }
