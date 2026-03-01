@@ -5,6 +5,11 @@ import java.util.stream.Collectors;
 
 public class UserManager implements Repository<User> {
     private final Map<String, User> users = new HashMap<>();
+    private AuditLog auditLog;
+
+    public void setAuditLog(AuditLog auditLog) {
+        this.auditLog = auditLog;
+    }
 
     @Override
     public void add(User user) {
@@ -16,11 +21,18 @@ public class UserManager implements Repository<User> {
         }
         User validated = User.validate(user.username(), user.fullName(), user.email());
         users.put(validated.username(), validated);
+        if (auditLog != null) {
+            auditLog.log("USER_CREATE", "system", validated.username(), validated.email());
+        }
     }
 
     @Override
     public boolean remove(User user) {
-        return users.remove(user.username(), user);
+        boolean removed = users.remove(user.username(), user);
+        if (removed && auditLog != null) {
+            auditLog.log("USER_DELETE", "system", user.username(), "");
+        }
+        return removed;
     }
 
 

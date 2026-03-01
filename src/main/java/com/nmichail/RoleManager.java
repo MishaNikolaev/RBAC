@@ -9,9 +9,14 @@ public class RoleManager implements Repository<Role> {
     private final Map<String, Role> byName = new HashMap<>();
 
     private Predicate<Role> roleAssignedChecker = null;
+    private AuditLog auditLog;
 
     public void setRoleAssignedChecker(Predicate<Role> checker) {
         this.roleAssignedChecker = checker;
+    }
+
+    public void setAuditLog(AuditLog auditLog) {
+        this.auditLog = auditLog;
     }
 
     @Override
@@ -27,6 +32,9 @@ public class RoleManager implements Repository<Role> {
         }
         byId.put(role.id, role);
         byName.put(role.name, role);
+        if (auditLog != null) {
+            auditLog.log("ROLE_CREATE", "system", role.name, role.description);
+        }
     }
 
     @Override
@@ -40,6 +48,9 @@ public class RoleManager implements Repository<Role> {
         boolean removed = byId.remove(role.id, role);
         if (removed) {
             byName.remove(role.name, role);
+            if (auditLog != null) {
+                auditLog.log("ROLE_DELETE", "system", role.name, "");
+            }
         }
         return removed;
     }

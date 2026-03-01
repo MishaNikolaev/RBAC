@@ -72,5 +72,30 @@ public class Main {
         System.out.println("isActive(): " + tempPast.isActive());
         System.out.println("isAutoRenew(): " + tempPast.isAutoRenew());
         System.out.println("getTimeRemaining(): " + tempPast.getTimeRemaining());
+
+        AuditLog auditLog = new AuditLog();
+        UserManager userManager = new UserManager();
+        userManager.setAuditLog(auditLog);
+        RoleManager roleManager = new RoleManager();
+        roleManager.setAuditLog(auditLog);
+        AssignmentManager assignmentManager = new AssignmentManager();
+        assignmentManager.setAuditLog(auditLog);
+
+        userManager.add(u1);
+        roleManager.add(admin);
+        assignmentManager.add(assignment);
+        assignmentManager.add(tempFuture);
+        assignmentManager.revokeAssignment(tempFuture.assignmentId());
+        roleManager.remove(admin);
+
+        System.out.println("\nCommand: audit-log");
+        auditLog.printLog();
+
+        try {
+            auditLog.saveToFile("build/audit.log");
+            System.out.println("Log saved to build/audit.log");
+        } catch (java.io.IOException e) {
+            System.out.println("Exception saving log: " + e.getMessage());
+        }
     }
 }
