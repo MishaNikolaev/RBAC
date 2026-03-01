@@ -1,8 +1,5 @@
 package com.nmichail;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 public class TemporaryAssignment extends AbstractRoleAssignment {
 
     String expiresAt;
@@ -17,11 +14,11 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
 
     @Override
     public boolean isActive() {
-        return isActive(LocalDate.now().toString());
+        return isActive(DateUtils.getCurrentDate());
     }
 
     public boolean isActive(String asOfDate) {
-        return asOfDate != null && asOfDate.compareTo(expiresAt) <= 0;
+        return asOfDate != null && !DateUtils.isAfter(asOfDate, expiresAt);
     }
 
     @Override
@@ -38,11 +35,11 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
     }
 
     public boolean isExpired() {
-        return isExpired(LocalDate.now().toString());
+        return isExpired(DateUtils.getCurrentDate());
     }
 
     public boolean isExpired(String asOfDate) {
-        return asOfDate == null || asOfDate.compareTo(expiresAt) > 0;
+        return asOfDate == null || DateUtils.isAfter(asOfDate, expiresAt);
     }
 
     public void extend(String newExpirationDate) {
@@ -54,15 +51,10 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
     }
 
     public String getTimeRemaining() {
-        try {
-            LocalDate end = LocalDate.parse(expiresAt);
-            long days = ChronoUnit.DAYS.between(LocalDate.now(), end);
-            if (days < 0) return "Expired";
-            if (days == 0) return "Expires today";
-            return days + " day(s) remaining";
-        } catch (Exception e) {
-            return "Unknown";
-        }
+        String relative = DateUtils.formatRelativeTime(expiresAt);
+        if ("today".equals(relative)) return "Expires today";
+        if (relative.startsWith("in ")) return relative.replace("in ", "") + " remaining";
+        return "Expired";
     }
 
     public String getExpiresAt() { return expiresAt; }

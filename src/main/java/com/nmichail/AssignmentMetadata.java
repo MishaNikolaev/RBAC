@@ -8,8 +8,7 @@ public record AssignmentMetadata(
         String reason
 ) {
     public static AssignmentMetadata now(String assignedBy, String reason) {
-        String at = Instant.now().toString();
-        return new AssignmentMetadata(assignedBy, at, reason);
+        return new AssignmentMetadata(assignedBy, Instant.now().toString(), reason);
     }
 
     public String format() {
