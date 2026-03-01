@@ -6,20 +6,14 @@ public record Permission(
         String description
 ) {
     public Permission {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name cannot be null or blank");
-        }
-        if (resource == null || resource.isBlank()) {
-            throw new IllegalArgumentException("resource cannot be null or blank");
-        }
-        if (description == null || description.isBlank()) {
-            throw new IllegalArgumentException("description cannot be empty");
-        }
-        name = name.toUpperCase().trim();
+        ValidationUtils.requireNonEmpty(name, "name");
+        ValidationUtils.requireNonEmpty(resource, "resource");
+        ValidationUtils.requireNonEmpty(description, "description");
+        name = ValidationUtils.normalizeString(name).toUpperCase();
         if (name.contains(" ")) {
             throw new IllegalArgumentException("name must not contain spaces");
         }
-        resource = resource.toLowerCase().trim();
+        resource = ValidationUtils.normalizeString(resource).toLowerCase();
     }
 
     public String format() {

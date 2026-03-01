@@ -3,20 +3,15 @@ package com.nmichail;
 public class RoleFilters {
 
     public static RoleFilter byName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("username cannot be null or blank");
-        }
+        ValidationUtils.requireNonEmpty(name, "name");
         return role -> role.name().equals(name);
     }
 
     public static RoleFilter byNameContains(String substring) {
-        if (substring == null || substring.isBlank()) {
-            throw new IllegalArgumentException("substring cannot be null or blank");
-        }
+        ValidationUtils.requireNonEmpty(substring, "substring");
         return role -> role.name().toLowerCase()
-                .contains(substring.toLowerCase());
+                .contains(ValidationUtils.normalizeString(substring).toLowerCase());
     }
-
 
     public static RoleFilter hasPermission(Permission permission) {
         if (permission == null) {
@@ -26,9 +21,8 @@ public class RoleFilters {
     }
 
     public static RoleFilter hasPermission(String permissionName, String resource) {
-        if (permissionName == null || resource.isBlank()) {
-            throw new IllegalArgumentException("permissonName cannot be null and resource cannot be blank");
-        }
+        ValidationUtils.requireNonEmpty(permissionName, "permissionName");
+        ValidationUtils.requireNonEmpty(resource, "resource");
         return role -> role.hasPermission(permissionName, resource);
     }
 

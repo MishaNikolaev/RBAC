@@ -46,7 +46,11 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
     }
 
     public void extend(String newExpirationDate) {
-        this.expiresAt = newExpirationDate;
+        ValidationUtils.requireNonEmpty(newExpirationDate, "newExpirationDate");
+        if (!ValidationUtils.isValidDate(newExpirationDate)) {
+            throw new IllegalArgumentException("invalid date format, expected yyyy-MM-dd: " + newExpirationDate);
+        }
+        this.expiresAt = newExpirationDate.trim();
     }
 
     public String getTimeRemaining() {

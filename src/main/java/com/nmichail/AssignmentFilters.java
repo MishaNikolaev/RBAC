@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class AssignmentFilters {
+
     public static AssignmentFilter byUser(User user) {
         if (user == null) {
             throw new IllegalArgumentException("user cannot be null");
@@ -12,9 +13,7 @@ public class AssignmentFilters {
     }
 
     public static AssignmentFilter byUserName(String username) {
-        if (username == null || username.isBlank()) {
-            throw new IllegalArgumentException("username cannot be null or blank");
-        }
+        ValidationUtils.requireNonEmpty(username, "username");
         return assignment -> assignment.user().username().equals(username);
     }
 
@@ -26,9 +25,7 @@ public class AssignmentFilters {
     }
 
     public static AssignmentFilter byRoleName(String roleName) {
-        if (roleName == null || roleName.isBlank()) {
-            throw new IllegalArgumentException("role cannot be null or blank");
-        }
+        ValidationUtils.requireNonEmpty(roleName, "roleName");
         return assignment -> assignment.role().name().equals(roleName);
     }
 

@@ -108,6 +108,8 @@ public class AssignmentManager implements Repository<RoleAssignment> {
     }
 
     public void extendTemporaryAssignment(String assignmentId, String newExpirationDate) {
+        ValidationUtils.requireNonEmpty(assignmentId, "assignmentId");
+        ValidationUtils.requireNonEmpty(newExpirationDate, "newExpirationDate");
         RoleAssignment assignment = assignments.get(assignmentId);
         if (!(assignment instanceof TemporaryAssignment ta)) {
             throw new IllegalArgumentException("Назначение не является временным");
