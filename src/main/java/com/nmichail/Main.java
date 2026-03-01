@@ -85,6 +85,35 @@ public class Main {
         roleManager.add(admin);
         assignmentManager.add(assignment);
         assignmentManager.add(tempFuture);
+
+        ReportGenerator reportGenerator = new ReportGenerator();
+        System.out.println("\n Command: report-users");
+        String userReport = reportGenerator.generateUserReport(userManager, assignmentManager);
+        System.out.println(userReport);
+        try {
+            reportGenerator.exportToFile(userReport, "build/report-users.txt");
+        } catch (java.io.IOException e) {
+            System.out.println("Export failed: " + e.getMessage());
+        }
+
+        System.out.println("Command: report-roles");
+        String roleReport = reportGenerator.generateRoleReport(roleManager, assignmentManager);
+        System.out.println(roleReport);
+        try {
+            reportGenerator.exportToFile(roleReport, "build/report-roles.txt");
+        } catch (java.io.IOException e) {
+            System.out.println("Export failed: " + e.getMessage());
+        }
+
+        System.out.println("Command: report-matrix");
+        String matrixReport = reportGenerator.generatePermissionMatrix(userManager, assignmentManager);
+        System.out.println(matrixReport);
+        try {
+            reportGenerator.exportToFile(matrixReport, "build/report-matrix.txt");
+        } catch (java.io.IOException e) {
+            System.out.println("Export failed: " + e.getMessage());
+        }
+
         assignmentManager.revokeAssignment(tempFuture.assignmentId());
         roleManager.remove(admin);
 
