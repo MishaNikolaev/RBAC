@@ -97,17 +97,18 @@ public final class ConsoleUtils {
 
     public static void printBox(String title, String content) {
         int width = 72;
+        int inner = width - 4;
         String border = "╔" + "═".repeat(width - 2) + "╗";
         System.out.println(border);
         if (title != null && !title.isEmpty()) {
-            String t = title.length() > width - 4 ? title.substring(0, width - 5) + "…" : title;
-            System.out.println("║  " + BOLD + t + RESET + " ".repeat(Math.max(0, width - 4 - t.length())) + "  ║");
+            String t = FormatUtils.padRight(FormatUtils.truncate(title, inner), inner);
+            System.out.println("║  " + BOLD + t + RESET + "  ║");
             System.out.println("╠" + "═".repeat(width - 2) + "╣");
         }
         if (content != null && !content.isEmpty()) {
             for (String line : content.split("\n")) {
-                String pad = line.length() < width - 4 ? " ".repeat(width - 4 - line.length()) : "";
-                System.out.println("║  " + line + pad + "  ║");
+                String padded = FormatUtils.padRight(FormatUtils.truncate(line, inner), inner);
+                System.out.println("║  " + padded + "  ║");
             }
         }
         System.out.println("╚" + "═".repeat(width - 2) + "╝");
@@ -116,7 +117,7 @@ public final class ConsoleUtils {
 
     public static void printSection(String title) {
         System.out.println("");
-        System.out.println("  " + BOLD + "── " + title + " ──" + RESET);
+        System.out.println("  " + BOLD + FormatUtils.formatHeader(title) + RESET);
         System.out.println("");
     }
 }

@@ -43,15 +43,22 @@ public class AuditLog {
 
     public void printLog() {
         if (entries.isEmpty()) {
-            System.out.println("Audit log (nothing)");
+            System.out.println("Audit log\n(nothing)\n");
             return;
         }
         System.out.println("Audit log");
+        String[] headers = {"Timestamp", "Action", "Performer", "Target", "Details"};
+        List<String[]> rows = new ArrayList<>();
         for (AuditEntry e : entries) {
-            System.out.printf("[%s] %s | performer: %s | target: %s | %s%n",
-                    e.timestamp(), e.action(), e.performer(), e.target(), e.details());
+            rows.add(new String[]{
+                    FormatUtils.truncate(e.timestamp(), 24),
+                    e.action(),
+                    e.performer(),
+                    e.target(),
+                    FormatUtils.truncate(e.details(), 30)
+            });
         }
-        System.out.println("End");
+        System.out.println(FormatUtils.formatTable(headers, rows));
     }
 
     public void saveToFile(String filename) throws IOException {
