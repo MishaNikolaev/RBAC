@@ -1,4 +1,4 @@
-name: rbac
+name: RBAC
 
 on:
   push:
@@ -11,50 +11,95 @@ on:
       - dev
 
 jobs:
-  build:
-    name: sborka
+  build-test-demo:
+    name: Сборка, тесты и демонстрация RBAC
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout кода
         uses: actions/checkout@v4
 
-      - name: gradlew more rules
+      - name: Сделать gradlew исполняемым
         run: chmod +x gradlew
 
-      - name: setup Java 17
+      - name: Настройка Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: check Java version
+      - name: Проверка версий
         run: |
           java -version
           ./gradlew --version
 
-      - name: build stage
+      - name: Сборка
         id: build
         run: ./gradlew -q clean compileJava -Dfile.encoding=UTF-8
         env:
           GRADLE_OPTS: "-Dfile.encoding=UTF-8"
 
-      - name: stage demo
-        id: demo
+      - name: Тестирование
+        id: test
         run: |
-          ./gradlew -q run -Dfile.encoding=UTF-8 2>&1 | tee demo-output.log || echo "demo ends"
+          ./gradlew test -Dfile.encoding=UTF-8 2>&1 | tee test-output.log
           echo ""
-          echo "output"
-          cat demo-output.log
+          if grep -q "BUILD SUCCESSFUL" test-output.log; then
+            echo "Все тесты прошли успешно"
+            if grep -qE "[0-9]+ tests? (completed|passed)" test-output.log; then
+              grep -oE "[0-9]+ tests? (completed|passed)" test-output.log | tail -1 || true
+            fi
+          else
+            echo "Некоторые тесты не прошли"
+            exit 1
+          fi
         env:
           GRADLE_OPTS: "-Dfile.encoding=UTF-8"
           JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
 
-      - name: save demo log
+      - name: Статистика тестов
+        if: success() || failure()
+        run: |
+          TEST_LOG="test-output.log"
+          if [ -f "$TEST_LOG" ]; then
+            if grep -q "BUILD SUCCESSFUL" "$TEST_LOG"; then
+              echo "Результат: все тесты прошли успешно"
+            else
+              echo "Результат: есть провалы или ошибки"
+              grep -E "FAILED|failed|Exception" "$TEST_LOG" | tail -20 || true
+            fi
+          fi
+
+      - name: Демонстрация
+        id: demo
+        run: |
+          echo "запуск"
+          ./gradlew -q run -Dfile.encoding=UTF-8 2>&1 | tee demo-output.log
+          EXIT_CODE=${PIPESTATUS[0]}
+          echo ""
+          echo "последние 40 строк"
+          tail -n 40 demo-output.log
+          exit $EXIT_CODE
+        env:
+          GRADLE_OPTS: "-Dfile.encoding=UTF-8"
+          JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
+
+      - name: Сохранить логи
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: demo-output
-          path: demo-output.log
+          name: build-logs-${{ github.sha }}
+          path: |
+            test-output.log
+            demo-output.log
           retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Итоговый отчёт
+        if: always()
+        run: |
+          echo "Статус сборки: ${{ steps.build.outcome }}"
+          echo "Статус тестов: ${{ steps.test.outcome }}"
+          echo "Статус демонстрации: ${{ steps.demo.outcome }}"
+          echo ""
