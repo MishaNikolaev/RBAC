@@ -66,12 +66,6 @@ public class CommandParser {
         }
         String[] parts = input.trim().split("\\s+");
         String name = parts[0];
-
-        if ("help".equalsIgnoreCase(name)) {
-            printHelp();
-            return;
-        }
-
         executeCommand(name, scanner, system);
     }
 }

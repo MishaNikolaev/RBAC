@@ -9,8 +9,8 @@ import static java.util.Collections.unmodifiableSet;
 
 public class Role {
     public final String id;
-    public final String name;
-    public final String description;
+    public String name;
+    public String description;
     public final Set<Permission> permissions;
 
     public Role(String name, String description, Set<Permission> permissions) {

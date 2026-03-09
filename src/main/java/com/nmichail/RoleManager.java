@@ -131,6 +131,29 @@ public class RoleManager implements Repository<Role> {
                 .collect(Collectors.toList());
     }
 
+    public void updateRole(String currentName, String newName, String newDescription) {
+        ValidationUtils.requireNonEmpty(currentName, "currentName");
+        ValidationUtils.requireNonEmpty(newName, "newName");
+        ValidationUtils.requireNonEmpty(newDescription, "newDescription");
+
+        Role role = byName.get(currentName);
+        if (role == null) {
+            throw new IllegalArgumentException("role does not exist: " + currentName);
+        }
+        if (!currentName.equals(newName) && byName.containsKey(newName)) {
+            throw new IllegalArgumentException("role with name '" + newName + "' already exists");
+        }
+
+        String oldName = role.name;
+        role.name = newName;
+        role.description = newDescription;
+
+        if (!oldName.equals(newName)) {
+            byName.remove(oldName);
+            byName.put(newName, role);
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
