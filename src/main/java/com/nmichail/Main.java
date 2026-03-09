@@ -11,6 +11,10 @@ public class Main {
             runWizard();
             return;
         }
+        if (args.length > 0 && "console".equalsIgnoreCase(args[0])) {
+            runConsole();
+            return;
+        }
 
         User u1 = User.validate("misha_nikolaev", "Misha Nikolaev", "nmichail@example.com");
         System.out.println(u1.format());
@@ -218,5 +222,30 @@ public class Main {
             System.out.flush();
         }
         runWizardStep(scanner, userManager, roleManager, assignmentManager, reportGenerator);
+    }
+
+    private static void runConsole() {
+        RBACSystem system = new RBACSystem();
+        system.initialize();
+        CommandParser parser = new CommandParser();
+        CommandRegistry.registerAll(parser);
+
+        System.out.println("RBAC Console. Type 'help' for commands, 'exit' to quit.");
+        System.out.println("Tip: run with --console=plain to avoid Gradle progress bar.\n");
+
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.print("rbac> ");
+                System.out.flush();
+                if (!scanner.hasNextLine()) {
+                    break;
+                }
+                String line = scanner.nextLine();
+                if (line == null) {
+                    break;
+                }
+                parser.parseAndExecute(line, scanner, system);
+            }
+        }
     }
 }
