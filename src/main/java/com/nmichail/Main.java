@@ -1,5 +1,6 @@
 package com.nmichail;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
@@ -13,6 +14,10 @@ public class Main {
         }
         if (args.length > 0 && "console".equalsIgnoreCase(args[0])) {
             runConsole();
+            return;
+        }
+        if (args.length > 0 && "progress".equalsIgnoreCase(args[0])) {
+            MultiThreadProgressApp.main(Arrays.copyOfRange(args, 1, args.length));
             return;
         }
 
