@@ -38,6 +38,43 @@ public class ReportGenerator {
         return sb.toString();
     }
 
+    public String generateUserReportParallel(UserManager userManager, AssignmentManager assignmentManager) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(FormatUtils.formatHeader("User Report")).append("\n\n");
+        List<User> users = userManager.findAll();
+        users.sort(Comparator.comparing(User::username));
+        if (users.isEmpty()) {
+            sb.append("No users.\n");
+            return sb.toString();
+        }
+
+        String[] headers = {"Username", "Full Name", "Email"};
+        List<String[]> rows = users.parallelStream()
+                .map(user -> new String[]{user.username(), user.fullName(), user.email()})
+                .collect(Collectors.toList());
+        sb.append(FormatUtils.formatTable(headers, rows)).append("\n\n");
+
+        List<String> roleLines = users.parallelStream()
+                .map(user -> {
+                    List<RoleAssignment> assignments = assignmentManager.findByUser(user).stream()
+                            .filter(RoleAssignment::isActive)
+                            .toList();
+                    if (assignments.isEmpty()) {
+                        return null;
+                    }
+                    String roles = assignments.stream()
+                            .map(a -> a.role().name + " [" + a.assignmentType() + "]")
+                            .collect(Collectors.joining(", "));
+                    return String.format("%s — Roles (%d): %s", user.username(), assignments.size(), roles);
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        for (String line : roleLines) {
+            sb.append(line).append("\n");
+        }
+        return sb.toString();
+    }
+
     public String generateRoleReport(RoleManager roleManager, AssignmentManager assignmentManager) {
         StringBuilder sb = new StringBuilder();
         sb.append(FormatUtils.formatHeader("Role Report")).append("\n\n");
@@ -99,6 +136,53 @@ public class ReportGenerator {
             }
             rows.add(row);
         }
+        sb.append(FormatUtils.formatTable(headers, rows)).append("\n");
+        return sb.toString();
+    }
+
+    public String generatePermissionMatrixParallel(UserManager userManager, AssignmentManager assignmentManager) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(FormatUtils.formatHeader("Permission matrix")).append("\n\n");
+        List<User> users = userManager.findAll();
+        users.sort(Comparator.comparing(User::username));
+        if (users.isEmpty()) {
+            sb.append("No users.\n");
+            return sb.toString();
+        }
+
+        Set<String> resources = users.parallelStream()
+                .flatMap(u -> assignmentManager.getUserPermissions(u).stream())
+                .map(Permission::resource)
+                .collect(Collectors.toCollection(TreeSet::new));
+
+        if (resources.isEmpty()) {
+            sb.append("No permissions or resources.\n");
+            return sb.toString();
+        }
+
+        List<String> resourceList = new ArrayList<>(resources);
+        String[] headers = new String[resourceList.size() + 1];
+        headers[0] = "User";
+        for (int i = 0; i < resourceList.size(); i++) {
+            headers[i + 1] = resourceList.get(i);
+        }
+
+        List<String[]> rows = users.parallelStream()
+                .map(user -> {
+                    Set<Permission> perms = assignmentManager.getUserPermissions(user);
+                    Map<String, Set<String>> byResource = perms.stream()
+                            .collect(Collectors.groupingBy(Permission::resource,
+                                    Collectors.mapping(Permission::name, Collectors.toSet())));
+                    String[] row = new String[headers.length];
+                    row[0] = user.username();
+                    for (int i = 0; i < resourceList.size(); i++) {
+                        Set<String> names = byResource.getOrDefault(resourceList.get(i), Set.of());
+                        row[i + 1] = names.isEmpty() ? "—" : String.join(",", new TreeSet<>(names));
+                    }
+                    return row;
+                })
+                .collect(Collectors.toList());
+
         sb.append(FormatUtils.formatTable(headers, rows)).append("\n");
         return sb.toString();
     }
