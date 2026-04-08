@@ -160,4 +160,14 @@ public class AssignmentManager implements Repository<RoleAssignment> {
             ta.extend(newExpirationDate);
         }
     }
+
+    public int sweepExpiredTemporaryAssignments() {
+        int marked = 0;
+        for (RoleAssignment a : assignments.values()) {
+            if (a instanceof TemporaryAssignment ta && ta.tryMarkInactiveIfExpired()) {
+                marked++;
+            }
+        }
+        return marked;
+    }
 }

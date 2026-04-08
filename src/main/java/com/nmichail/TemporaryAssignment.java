@@ -4,6 +4,7 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
 
     String expiresAt;
     final boolean autoRenew;
+    private volatile boolean inactiveByScheduler;
 
     public TemporaryAssignment(User user, Role role, AssignmentMetadata metadata,
                                String expiresAt, boolean autoRenew) {
@@ -14,11 +15,30 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
 
     @Override
     public boolean isActive() {
+        if (inactiveByScheduler) {
+            return false;
+        }
         return isActive(DateUtils.getCurrentDate());
     }
 
     public boolean isActive(String asOfDate) {
+        if (inactiveByScheduler) {
+            return false;
+        }
         return asOfDate != null && !DateUtils.isAfter(asOfDate, expiresAt);
+    }
+
+    public boolean tryMarkInactiveIfExpired() {
+        synchronized (this) {
+            if (!isExpired()) {
+                return false;
+            }
+            if (inactiveByScheduler) {
+                return false;
+            }
+            inactiveByScheduler = true;
+            return true;
+        }
     }
 
     @Override
@@ -48,6 +68,7 @@ public class TemporaryAssignment extends AbstractRoleAssignment {
             throw new IllegalArgumentException("invalid date format, expected yyyy-MM-dd: " + newExpirationDate);
         }
         this.expiresAt = newExpirationDate.trim();
+        inactiveByScheduler = false;
     }
 
     public String getTimeRemaining() {

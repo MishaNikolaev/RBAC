@@ -10,17 +10,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class RBACSystem {
 
+    private static final long SCHEDULER_INITIAL_DELAY_SECONDS = 2L;
+    private static final long SCHEDULER_PERIOD_SECONDS = 30L;
+
     private final UserManager userManager;
     private final RoleManager roleManager;
     private final AssignmentManager assignmentManager;
     private final AuditLog auditLog;
     private final ExecutorService executor;
+    private final ScheduledExecutorService scheduler;
 
     private String currentUser;
 
@@ -30,6 +35,7 @@ public class RBACSystem {
         this.assignmentManager = new AssignmentManager();
         this.auditLog = new AuditLog();
         this.executor = createExecutor();
+        this.scheduler = createScheduler();
 
         this.userManager.setAuditLog(auditLog);
         this.roleManager.setAuditLog(auditLog);
@@ -39,6 +45,12 @@ public class RBACSystem {
 
         this.roleManager.setRoleAssignedChecker(role ->
                 assignmentManager.findByRole(role).stream().anyMatch(RoleAssignment::isActive));
+
+        this.scheduler.scheduleAtFixedRate(
+                this::runScheduledMaintenance,
+                SCHEDULER_INITIAL_DELAY_SECONDS,
+                SCHEDULER_PERIOD_SECONDS,
+                TimeUnit.SECONDS);
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown, "rbac-shutdown"));
     }
@@ -61,6 +73,10 @@ public class RBACSystem {
 
     public ExecutorService getExecutor() {
         return executor;
+    }
+
+    public ScheduledExecutorService getScheduler() {
+        return scheduler;
     }
 
     public void setCurrentUser(String username) {
@@ -237,6 +253,15 @@ public class RBACSystem {
     }
 
     public void shutdown() {
+        scheduler.shutdown();
+        try {
+            if (!scheduler.awaitTermination(2, TimeUnit.SECONDS)) {
+                scheduler.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            scheduler.shutdownNow();
+        }
         try {
             auditLog.shutdown();
         } catch (Exception ignored) {
@@ -252,6 +277,23 @@ public class RBACSystem {
         }
     }
 
+    private void runScheduledMaintenance() {
+        try {
+            int expiredMarked = assignmentManager.sweepExpiredTemporaryAssignments();
+            int users = userManager.count();
+            int roles = roleManager.count();
+            int assignments = assignmentManager.count();
+            int activeAssignments = assignmentManager.getActiveAssignments().size();
+            String details = String.format(
+                    "users=%d roles=%d assignments=%d activeAssignments=%d expiredTempMarkedThisRun=%d",
+                    users, roles, assignments, activeAssignments, expiredMarked);
+            auditLog.log("SCHEDULER_STATS", "scheduler", "rbac", details);
+        } catch (Throwable t) {
+            auditLog.log("SCHEDULER_ERROR", "scheduler", "rbac",
+                    t.getMessage() != null ? t.getMessage() : t.getClass().getSimpleName());
+        }
+    }
+
     private static ExecutorService createExecutor() {
         int threads = Math.max(2, Runtime.getRuntime().availableProcessors());
         AtomicInteger idx = new AtomicInteger(1);
@@ -261,5 +303,14 @@ public class RBACSystem {
             return t;
         };
         return Executors.newFixedThreadPool(threads, tf);
+    }
+
+    private static ScheduledExecutorService createScheduler() {
+        ThreadFactory tf = r -> {
+            Thread t = new Thread(r, "rbac-scheduler");
+            t.setDaemon(true);
+            return t;
+        };
+        return Executors.newSingleThreadScheduledExecutor(tf);
     }
 }
