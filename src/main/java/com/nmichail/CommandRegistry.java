@@ -681,6 +681,24 @@ public final class CommandRegistry {
                     System.exit(0);
                 });
 
+        parser.registerCommand("report-users-async", "Generate user report in background thread",
+                (scanner, system) -> {
+                    System.out.println("Started background job: generating user report...");
+                    system.getExecutor().submit(() -> {
+                        try {
+                            ReportGenerator rg = new ReportGenerator();
+                            String report = rg.generateUserReportParallel(system.getUserManager(), system.getAssignmentManager());
+                            System.out.println();
+                            ConsoleUtils.printBox("User report (async)", report);
+                            System.out.print("rbac> ");
+                        } catch (Exception e) {
+                            System.out.println();
+                            ConsoleUtils.printBox("User report failed (async)", e.getMessage());
+                            System.out.print("rbac> ");
+                        }
+                    });
+                });
+
         parser.registerCommand("save", "Save data to file",
                 (scanner, system) -> {
                     String filename = ConsoleUtils.promptString(scanner, "Save to file", true);
@@ -690,6 +708,24 @@ public final class CommandRegistry {
                     } catch (Exception e) {
                         ConsoleUtils.printBox("Save failed", e.getMessage());
                     }
+                });
+
+        parser.registerCommand("save-async", "Save data to file in background thread",
+                (scanner, system) -> {
+                    String filename = ConsoleUtils.promptString(scanner, "Save to file", true);
+                    System.out.println("Started background job: saving to " + filename + " ...");
+                    system.getExecutor().submit(() -> {
+                        try {
+                            system.saveToFile(filename);
+                            System.out.println();
+                            ConsoleUtils.printBox("Save successful (async)", "Data saved to " + filename);
+                            System.out.print("rbac> ");
+                        } catch (Exception e) {
+                            System.out.println();
+                            ConsoleUtils.printBox("Save failed (async)", e.getMessage());
+                            System.out.print("rbac> ");
+                        }
+                    });
                 });
 
         parser.registerCommand("load", "Load data from file",

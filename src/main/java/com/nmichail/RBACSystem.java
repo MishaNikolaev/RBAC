@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RBACSystem {
 
@@ -15,6 +20,7 @@ public class RBACSystem {
     private final RoleManager roleManager;
     private final AssignmentManager assignmentManager;
     private final AuditLog auditLog;
+    private final ExecutorService executor;
 
     private String currentUser;
 
@@ -23,6 +29,7 @@ public class RBACSystem {
         this.roleManager = new RoleManager();
         this.assignmentManager = new AssignmentManager();
         this.auditLog = new AuditLog();
+        this.executor = createExecutor();
 
         this.userManager.setAuditLog(auditLog);
         this.roleManager.setAuditLog(auditLog);
@@ -32,6 +39,8 @@ public class RBACSystem {
 
         this.roleManager.setRoleAssignedChecker(role ->
                 assignmentManager.findByRole(role).stream().anyMatch(RoleAssignment::isActive));
+
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown, "rbac-shutdown"));
     }
 
     public UserManager getUserManager() {
@@ -48,6 +57,10 @@ public class RBACSystem {
 
     public AuditLog getAuditLog() {
         return auditLog;
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
     }
 
     public void setCurrentUser(String username) {
@@ -221,5 +234,32 @@ public class RBACSystem {
                 assignmentManager.add(a);
             }
         }
+    }
+
+    public void shutdown() {
+        try {
+            auditLog.shutdown();
+        } catch (Exception ignored) {
+        }
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(1500, TimeUnit.MILLISECONDS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            executor.shutdownNow();
+        }
+    }
+
+    private static ExecutorService createExecutor() {
+        int threads = Math.max(2, Runtime.getRuntime().availableProcessors());
+        AtomicInteger idx = new AtomicInteger(1);
+        ThreadFactory tf = r -> {
+            Thread t = new Thread(r, "rbac-bg-" + idx.getAndIncrement());
+            t.setDaemon(true);
+            return t;
+        };
+        return Executors.newFixedThreadPool(threads, tf);
     }
 }
