@@ -1,12 +1,19 @@
 package com.nmichail;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class RoleManager implements Repository<Role> {
-    private final Map<String, Role> byId = new HashMap<>();
-    private final Map<String, Role> byName = new HashMap<>();
+    private final ConcurrentMap<String, Role> byId = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Role> byName = new ConcurrentHashMap<>();
+    private final Object lock = new Object();
 
     private Predicate<Role> roleAssignedChecker = null;
     private AuditLog auditLog;
@@ -24,14 +31,16 @@ public class RoleManager implements Repository<Role> {
         if (role == null) {
             throw new IllegalArgumentException("role cannot be null");
         }
-        if (byId.containsKey(role.id)) {
-            throw new IllegalArgumentException("role with same id already exists");
+        synchronized (lock) {
+            if (byId.containsKey(role.id)) {
+                throw new IllegalArgumentException("role with same id already exists");
+            }
+            if (byName.containsKey(role.name)) {
+                throw new IllegalArgumentException("role with name '" + role.name + "' already exists");
+            }
+            byId.put(role.id, role);
+            byName.put(role.name, role);
         }
-        if (byName.containsKey(role.name)) {
-            throw new IllegalArgumentException("role with name '" + role.name + "' already exists");
-        }
-        byId.put(role.id, role);
-        byName.put(role.name, role);
         if (auditLog != null) {
             auditLog.log("ROLE_CREATE", "system", role.name, role.description);
         }
@@ -45,14 +54,16 @@ public class RoleManager implements Repository<Role> {
         if (roleAssignedChecker != null && roleAssignedChecker.test(role)) {
             throw new IllegalStateException("role is assigned to users");
         }
-        boolean removed = byId.remove(role.id, role);
-        if (removed) {
-            byName.remove(role.name, role);
-            if (auditLog != null) {
-                auditLog.log("ROLE_DELETE", "system", role.name, "");
+        synchronized (lock) {
+            boolean removed = byId.remove(role.id, role);
+            if (removed) {
+                byName.remove(role.name, role);
+                if (auditLog != null) {
+                    auditLog.log("ROLE_DELETE", "system", role.name, "");
+                }
             }
+            return removed;
         }
-        return removed;
     }
 
     @Override
@@ -72,8 +83,10 @@ public class RoleManager implements Repository<Role> {
 
     @Override
     public void clear() {
-        byId.clear();
-        byName.clear();
+        synchronized (lock) {
+            byId.clear();
+            byName.clear();
+        }
     }
 
     public Optional<Role> findByName(String name) {
@@ -111,7 +124,9 @@ public class RoleManager implements Repository<Role> {
         if (permission == null) {
             throw new IllegalArgumentException("permission cannot be null");
         }
-        role.addPermission(permission);
+        synchronized (role) {
+            role.addPermission(permission);
+        }
     }
 
     public void removePermissionFromRole(String roleName, Permission permission) {
@@ -122,7 +137,9 @@ public class RoleManager implements Repository<Role> {
         if (permission == null) {
             throw new IllegalArgumentException("permission cannot be null");
         }
-        role.removePermission(permission);
+        synchronized (role) {
+            role.removePermission(permission);
+        }
     }
 
     public List<Role> findRolesWithPermission(String permissionName, String resource) {
@@ -136,21 +153,25 @@ public class RoleManager implements Repository<Role> {
         ValidationUtils.requireNonEmpty(newName, "newName");
         ValidationUtils.requireNonEmpty(newDescription, "newDescription");
 
-        Role role = byName.get(currentName);
-        if (role == null) {
-            throw new IllegalArgumentException("role does not exist: " + currentName);
-        }
-        if (!currentName.equals(newName) && byName.containsKey(newName)) {
-            throw new IllegalArgumentException("role with name '" + newName + "' already exists");
-        }
+        synchronized (lock) {
+            Role role = byName.get(currentName);
+            if (role == null) {
+                throw new IllegalArgumentException("role does not exist: " + currentName);
+            }
+            if (!currentName.equals(newName) && byName.containsKey(newName)) {
+                throw new IllegalArgumentException("role with name '" + newName + "' already exists");
+            }
 
-        String oldName = role.name;
-        role.name = newName;
-        role.description = newDescription;
+            synchronized (role) {
+                String oldName = role.name;
+                role.name = newName;
+                role.description = newDescription;
 
-        if (!oldName.equals(newName)) {
-            byName.remove(oldName);
-            byName.put(newName, role);
+                if (!oldName.equals(newName)) {
+                    byName.remove(oldName);
+                    byName.put(newName, role);
+                }
+            }
         }
     }
 

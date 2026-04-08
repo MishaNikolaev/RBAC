@@ -1,10 +1,17 @@
 package com.nmichail;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class UserManager implements Repository<User> {
-    private final Map<String, User> users = new HashMap<>();
+    private final ConcurrentMap<String, User> users = new ConcurrentHashMap<>();
     private AuditLog auditLog;
 
     public void setAuditLog(AuditLog auditLog) {
@@ -16,11 +23,11 @@ public class UserManager implements Repository<User> {
         if (user == null) {
             throw new IllegalArgumentException("user cannot be null");
         }
-        if (users.containsKey(user.username())) {
+        User validated = User.validate(user.username(), user.fullName(), user.email());
+        User prev = users.putIfAbsent(validated.username(), validated);
+        if (prev != null) {
             throw new IllegalArgumentException("user already exists");
         }
-        User validated = User.validate(user.username(), user.fullName(), user.email());
-        users.put(validated.username(), validated);
         if (auditLog != null) {
             auditLog.log("USER_CREATE", "system", validated.username(), validated.email());
         }
@@ -103,11 +110,11 @@ public class UserManager implements Repository<User> {
     }
 
     public void update(String username, String newFullName, String newEmail) {
-        if (!users.containsKey(username)) {
+        User validated = User.validate(username, newFullName, newEmail);
+        User updated = users.computeIfPresent(username, (k, v) -> validated);
+        if (updated == null) {
             throw new IllegalArgumentException("user does not exist");
         }
-        User validated = User.validate(username, newFullName, newEmail);
-        users.put(username, validated);
     }
 
     @Override

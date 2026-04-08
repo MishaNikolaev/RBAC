@@ -1,10 +1,17 @@
 package com.nmichail;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class AssignmentManager implements Repository<RoleAssignment> {
-    private final Map<String, RoleAssignment> assignments = new HashMap<>();
+    private final ConcurrentMap<String, RoleAssignment> assignments = new ConcurrentHashMap<>();
+    private final Object lock = new Object();
     private AuditLog auditLog;
 
     public void setAuditLog(AuditLog auditLog) {
@@ -13,10 +20,10 @@ public class AssignmentManager implements Repository<RoleAssignment> {
 
     @Override
     public void add(RoleAssignment assignment) {
-        if (assignments.containsKey(assignment.assignmentId())) {
+        RoleAssignment prev = assignments.putIfAbsent(assignment.assignmentId(), assignment);
+        if (prev != null) {
             throw new IllegalArgumentException("id already exists");
         }
-        assignments.put(assignment.assignmentId(), assignment);
         if (auditLog != null) {
             auditLog.log("ASSIGNMENT_CREATE", assignment.metadata().assignedBy(),
                     assignment.user().username() + " -> " + assignment.role().name,
@@ -26,7 +33,10 @@ public class AssignmentManager implements Repository<RoleAssignment> {
 
     @Override
     public boolean remove(RoleAssignment assignment) {
-        if (assignments.remove(assignment.assignmentId()) != null) {
+        if (assignment == null) {
+            return false;
+        }
+        if (assignments.remove(assignment.assignmentId(), assignment)) {
             if (auditLog != null) {
                 auditLog.log("ASSIGNMENT_DELETE", "system", assignment.assignmentId(), assignment.role().name);
             }
@@ -111,19 +121,24 @@ public class AssignmentManager implements Repository<RoleAssignment> {
     }
 
     public void revokeAssignment(String assignmentId) {
-        RoleAssignment assignment = assignments.get(assignmentId);
-        if (assignment == null) {
-            throw new IllegalArgumentException("assignment does not exist: " + assignmentId);
-        }
-        if (assignment instanceof PermanentAssignment pa) {
-            pa.revoke();
-            if (auditLog != null) {
-                auditLog.log("ASSIGNMENT_REVOKE", "system", assignmentId, "permanent revoked");
+        ValidationUtils.requireNonEmpty(assignmentId, "assignmentId");
+        synchronized (lock) {
+            RoleAssignment assignment = assignments.get(assignmentId);
+            if (assignment == null) {
+                throw new IllegalArgumentException("assignment does not exist: " + assignmentId);
             }
-        } else {
-            assignments.remove(assignmentId);
-            if (auditLog != null) {
-                auditLog.log("ASSIGNMENT_REVOKE", "system", assignmentId, "temporary removed");
+            if (assignment instanceof PermanentAssignment pa) {
+                synchronized (pa) {
+                    pa.revoke();
+                }
+                if (auditLog != null) {
+                    auditLog.log("ASSIGNMENT_REVOKE", "system", assignmentId, "permanent revoked");
+                }
+            } else {
+                assignments.remove(assignmentId);
+                if (auditLog != null) {
+                    auditLog.log("ASSIGNMENT_REVOKE", "system", assignmentId, "temporary removed");
+                }
             }
         }
     }
@@ -135,6 +150,8 @@ public class AssignmentManager implements Repository<RoleAssignment> {
         if (!(assignment instanceof TemporaryAssignment ta)) {
             throw new IllegalArgumentException("Assigment isn't temporary");
         }
-        ta.extend(newExpirationDate);
+        synchronized (ta) {
+            ta.extend(newExpirationDate);
+        }
     }
 }

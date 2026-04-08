@@ -8,11 +8,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class AuditLog {
 
-    private final List<AuditEntry> entries = new ArrayList<>();
+    private final List<AuditEntry> entries = new CopyOnWriteArrayList<>();
 
     public void log(String action, String performer, String target, String details) {
         String timestamp = Instant.now().toString();
