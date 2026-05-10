@@ -43,7 +43,6 @@
 /Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/model/TripStatus.java
 /Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/repository/AppUserRepository.java
 /Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/repository/DriverRepository.java
-/Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/repository/NotificationTaskJdbcRepository.java
 /Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/repository/NotificationTaskRepository.java
 /Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/repository/PassengerRepository.java
 /Users/nmichail/IdeaProjects/RBAC/src/main/java/com/nmichail/taxi/repository/TripRepository.java

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-@Disabled("H2 removed; enable when Postgres/Testcontainers test config is added")
+@Disabled("Requires PostgreSQL reachable per application properties (e.g. docker-compose)")
 class TaxiApplicationTests {
 
 	@Test

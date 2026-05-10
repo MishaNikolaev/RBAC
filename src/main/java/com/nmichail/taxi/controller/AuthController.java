@@ -21,7 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Arrays;
 import java.util.List;
 
-@Tag(name = "Auth", description = "Аутентификация: выдача JWT")
+@Tag(name = "Auth", description = "auth")
 @RestController
 @RequiredArgsConstructor
 public class AuthController {

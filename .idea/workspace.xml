@@ -4,166 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ce1c1fb-380c-435b-a73b-57f0d1413569" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/postgres.edMnLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/postgres.edMnLQ/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/postgres.edMnLQ/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/postgres.edMnLQ/schema/public.abK9xQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/taxi.HjY2AA.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/taxi.HjY2AA/schema/information_schema.FNRwLQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources/2ad6d872-6f77-4a69-b9a9-7289643ea0e7/storage_v2/_src_/database/taxi.HjY2AA/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/data_source_mapping.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/TaxiApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/DefaultAdminInitializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/JwtAuthenticationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/NotificationWorkNotifier.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/NotificationWorker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/OpenApiConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/RedisCacheConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/AuthController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/DriverController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/NotificationController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/PassengerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/StatsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/TripController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/CreateDriverRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/CreateNotificationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/CreatePassengerRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/CreateTripRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/DailyTripStatsResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/DriverResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/LoginRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/LoginResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/NotificationResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/PassengerResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/TripResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/UpdateDriverStatusRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/UpdateTripRatingRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/dto/UpdateTripStatusRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/exception/ApiExceptionHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/exception/ErrorResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/mapper/DriverMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/mapper/NotificationMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/mapper/PassengerMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/mapper/TripMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/AppUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/Driver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/DriverStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/NotificationTask.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/NotificationTaskStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/Passenger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/RecipientType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/Trip.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/model/TripStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/AppUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/DriverRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/NotificationTaskJdbcRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/NotificationTaskRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/PassengerRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/TripRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/AppUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/AvailableDriversCacheEvictor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/CachedAvailableDriversService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/JwtService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/NotificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/TripService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/TripStatsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__init.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V2__add_trip_distance_km.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V3__add_app_users.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/TaxiApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/TaxiApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/DefaultAdminInitializer.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/JwtAuthenticationFilter.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/NotificationWorkNotifier.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/NotificationWorker.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/OpenApiConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/RedisCacheConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/SecurityConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/AuthController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/DriverController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/NotificationController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/PassengerController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/StatsController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/TripController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/CreateDriverRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/CreateNotificationRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/CreatePassengerRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/CreateTripRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/DailyTripStatsResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/DriverResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/LoginRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/LoginResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/NotificationResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/PassengerResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/TripResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/UpdateDriverStatusRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/UpdateTripRatingRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/dto/UpdateTripStatusRequest.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/exception/ApiExceptionHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/exception/ErrorResponse.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/mapper/DriverMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/mapper/NotificationMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/mapper/PassengerMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/mapper/TripMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/AppUser.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/Driver.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/DriverStatus.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/NotificationTask.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/NotificationTaskStatus.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/Passenger.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/RecipientType.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/Trip.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/model/TripStatus.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/AppUserRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/DriverRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/NotificationTaskJdbcRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/NotificationTaskRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/PassengerRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/TripRepository.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/AppUserDetailsService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/AvailableDriversCacheEvictor.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/CachedAvailableDriversService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/JwtService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/NotificationService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/TripService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/TripStatsService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/UserService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/db/migration/V1__init.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/db/migration/V2__add_trip_distance_km.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/db/migration/V3__add_app_users.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/messages.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/nmichail-0.0.1-SNAPSHOT.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/nmichail-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.TaxiApplicationTests.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.TaxiApplicationTests.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/TaxiApplicationTests.class" afterDir="false" />
+    <list default="true" id="7ce1c1fb-380c-435b-a73b-57f0d1413569" name="Changes" comment="taxi">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/mapper/DriverMapperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/mapper/PassengerMapperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/mapper/TripMapperTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/service/JwtServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/service/TripStatsServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/service/UserServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.mapper.DriverMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.mapper.PassengerMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.mapper.TripMapperTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.service.JwtServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.service.TripStatsServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.service.UserServiceTest.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.mapper.DriverMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.mapper.PassengerMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.mapper.TripMapperTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.service.JwtServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.service.TripStatsServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.service.UserServiceTest.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/mapper/DriverMapperTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/mapper/PassengerMapperTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/mapper/TripMapperTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/service/JwtServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/service/TripStatsServiceTest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/service/UserServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/NotificationWorker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/config/NotificationWorker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/DriverController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/controller/DriverController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/NotificationTaskJdbcRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/NotificationTaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/repository/NotificationTaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nmichail/taxi/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/TaxiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nmichail/taxi/TaxiApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/NotificationWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/NotificationWorker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/OpenApiConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/OpenApiConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/config/SecurityConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/AuthController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/controller/AuthController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/NotificationTaskJdbcRepository.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/NotificationTaskRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/repository/NotificationTaskRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/NotificationService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nmichail/taxi/service/NotificationService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/messages.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.TaxiApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.nmichail.taxi.TaxiApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.TaxiApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.nmichail.taxi.TaxiApplicationTests.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/TaxiApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/nmichail/taxi/TaxiApplicationTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,6 +93,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Docker.Dockerfile.executor": "Run",
+    "JUnit.JwtServiceTest.executor": "Run",
+    "JUnit.PassengerMapperTest.executor": "Run",
+    "JUnit.TripMapperTest.executor": "Run",
+    "JUnit.TripStatsServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.testing.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -224,7 +124,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "configurable.group.build",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   },
@@ -234,42 +134,118 @@
     ]
   }
 }]]></component>
-  <component name="RunManager" selected="Docker.Dockerfile">
-    <configuration default="true" type="AppleRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" IS_LOCATION_SIMULATION_SUPPORTED="false" IS_LOCATION_SIMULATION_ALLOWED="true" APPLICATION_LANGUAGE="IDELaunchSchemeLanguageUseSystemLanguage" APPLICATION_REGION="" DEVELOPMENT_TEAM="${TEAM_ID}" MAKE_ACTIVE="TRUE" SHOULD_DEBUG_EXTENSIONS="false">
-      <embedded_app_extension_list />
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TaxiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <module name="nmichail" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.nmichail.taxi.TaxiApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.nmichail.taxi.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+  <component name="RunManager" selected="JUnit.UserServiceTest">
+    <configuration default="true" type="Application" factoryName="Application">
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+    <configuration name="JwtServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nmichail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nmichail.taxi.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nmichail.taxi.service" />
+      <option name="MAIN_CLASS_NAME" value="com.nmichail.taxi.service.JwtServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PassengerMapperTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nmichail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nmichail.taxi.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nmichail.taxi.mapper" />
+      <option name="MAIN_CLASS_NAME" value="com.nmichail.taxi.mapper.PassengerMapperTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TripMapperTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nmichail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nmichail.taxi.mapper.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nmichail.taxi.mapper" />
+      <option name="MAIN_CLASS_NAME" value="com.nmichail.taxi.mapper.TripMapperTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TripStatsServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nmichail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nmichail.taxi.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nmichail.taxi.service" />
+      <option name="MAIN_CLASS_NAME" value="com.nmichail.taxi.service.TripStatsServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nmichail" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nmichail.taxi.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nmichail.taxi.service" />
+      <option name="MAIN_CLASS_NAME" value="com.nmichail.taxi.service.UserServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="testing" type="JUnit" factoryName="JUnit">
+      <module name="nmichail" />
+      <option name="PACKAGE_NAME" value="com.nmichail.taxi.mapper" />
+      <option name="MAIN_CLASS_NAME" value="com.nmichail.taxi.mapper.DriverMapperTest" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
       <deployment type="dockerfile">
-        <settings>
-          <option name="sourceFilePath" value="Dockerfile" />
-        </settings>
+        <settings />
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
-      <deployment type="dockerfile" />
-      <method v="2" />
-    </configuration>
+    <list>
+      <item itemvalue="JUnit.testing" />
+      <item itemvalue="JUnit.JwtServiceTest" />
+      <item itemvalue="JUnit.PassengerMapperTest" />
+      <item itemvalue="JUnit.TripMapperTest" />
+      <item itemvalue="JUnit.TripStatsServiceTest" />
+      <item itemvalue="JUnit.UserServiceTest" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Docker.Dockerfile" />
-        <item itemvalue="Spring Boot.TaxiApplication" />
+        <item itemvalue="JUnit.UserServiceTest" />
+        <item itemvalue="JUnit.TripStatsServiceTest" />
+        <item itemvalue="JUnit.JwtServiceTest" />
+        <item itemvalue="JUnit.TripMapperTest" />
+        <item itemvalue="JUnit.PassengerMapperTest" />
       </list>
     </recent_temporary>
   </component>
@@ -277,6 +253,7 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
       </set>
     </attachedChunks>
   </component>
@@ -287,11 +264,25 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1777459916649</updated>
-      <workItem from="1777460685172" duration="58615000" />
+      <workItem from="1777460685172" duration="60129000" />
+      <workItem from="1778394023022" duration="22862000" />
     </task>
+    <task id="LOCAL-00001" summary="taxi">
+      <option name="closed" value="true" />
+      <created>1777891113971</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1777891113972</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="taxi" />
+    <option name="LAST_COMMIT_MESSAGE" value="taxi" />
   </component>
 </project>

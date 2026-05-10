@@ -1,1 +1,7 @@
 /Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/TaxiApplicationTests.java
+/Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/mapper/DriverMapperTest.java
+/Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/mapper/PassengerMapperTest.java
+/Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/mapper/TripMapperTest.java
+/Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/service/JwtServiceTest.java
+/Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/service/TripStatsServiceTest.java
+/Users/nmichail/IdeaProjects/RBAC/src/test/java/com/nmichail/taxi/service/UserServiceTest.java

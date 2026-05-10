@@ -4,7 +4,6 @@ import com.nmichail.taxi.model.NotificationTask;
 import com.nmichail.taxi.model.NotificationTaskStatus;
 import com.nmichail.taxi.model.RecipientType;
 import com.nmichail.taxi.model.Trip;
-import com.nmichail.taxi.repository.NotificationTaskJdbcRepository;
 import com.nmichail.taxi.repository.NotificationTaskRepository;
 import com.nmichail.taxi.config.NotificationWorkNotifier;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.util.Optional;
 public class NotificationService {
 
     private final NotificationTaskRepository taskRepository;
-    private final NotificationTaskJdbcRepository taskJdbc;
     private final ObjectProvider<NotificationWorkNotifier> workNotifier;
 
     public NotificationTask enqueue(long tripId, RecipientType recipientType, long recipientId, String message) {
@@ -51,16 +49,24 @@ public class NotificationService {
 
     @Transactional
     public Optional<NotificationTask> tryLockNextPendingTask() {
-        return taskJdbc.tryLockNextPendingTask();
+        Long id = taskRepository.findNextPendingTaskId();
+        if (id == null) {
+            return Optional.empty();
+        }
+        int updated = taskRepository.claimPendingTask(id);
+        if (updated != 1) {
+            return Optional.empty();
+        }
+        return taskRepository.findById(id);
     }
 
     @Transactional
     public void markSent(long taskId) {
-        taskJdbc.markSent(taskId);
+        taskRepository.markSent(taskId);
     }
 
     @Transactional
     public void markFailed(long taskId, String reason) {
-        taskJdbc.markFailed(taskId, reason);
+        taskRepository.markFailed(taskId, reason != null ? reason : "error");
     }
 }

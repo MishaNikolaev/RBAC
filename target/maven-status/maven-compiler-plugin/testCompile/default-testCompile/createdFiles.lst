@@ -1,1 +1,7 @@
+com/nmichail/taxi/mapper/PassengerMapperTest.class
 com/nmichail/taxi/TaxiApplicationTests.class
+com/nmichail/taxi/mapper/TripMapperTest.class
+com/nmichail/taxi/mapper/DriverMapperTest.class
+com/nmichail/taxi/service/JwtServiceTest.class
+com/nmichail/taxi/service/UserServiceTest.class
+com/nmichail/taxi/service/TripStatsServiceTest.class

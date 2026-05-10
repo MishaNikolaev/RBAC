@@ -33,7 +33,6 @@ com/nmichail/taxi/dto/CreateTripRequest.class
 com/nmichail/taxi/repository/AppUserRepository.class
 com/nmichail/taxi/exception/ApiExceptionHandler.class
 com/nmichail/taxi/controller/DriverController.class
-com/nmichail/taxi/repository/NotificationTaskJdbcRepository.class
 com/nmichail/taxi/dto/CreateNotificationRequest.class
 com/nmichail/taxi/model/NotificationTask.class
 com/nmichail/taxi/model/NotificationTaskStatus.class

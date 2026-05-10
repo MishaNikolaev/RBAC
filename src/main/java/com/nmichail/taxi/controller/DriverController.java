@@ -21,7 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@Tag(name = "Drivers", description = "Водители: CRUD, статус, список доступных (кэш Redis)")
+@Tag(name = "Drivers", description = "Водители: CRUD, статус, список доступных")
 @RestController
 @RequiredArgsConstructor
 public class DriverController {

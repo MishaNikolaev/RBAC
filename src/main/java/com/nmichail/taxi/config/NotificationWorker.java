@@ -18,7 +18,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(value = "taxi.notification.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(
+        value = "taxi.notification.enabled",
+        havingValue = "true",
+        matchIfMissing = true
+)
 public class NotificationWorker {
 
     private final NotificationService notificationService;
